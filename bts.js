@@ -29,14 +29,10 @@ class Node {
 class Tree {
     constructor(array) {
         this.array = array;
-        this.root = this.buildTree(array, 0, array.length-1);  // ?!?!?!?!?!?!?!?!?
+        this.root = this.buildTree(array, 0, array.length-1); 
     }
 
-    // ACCEPTS ARRAY WHEN INITIALIZED
-    // HAS ROOT ATTRIBUTE WHICH IS WHAT BUILDTREE RETURNS
-
     buildTree(array, start, end) {
-
         
         if (start > end) {
             return null;
@@ -50,11 +46,42 @@ class Tree {
         node.right = this.buildTree(array, mid+1, end);
 
         return node;
+    }
+
+    insert(value) {
+
+        findNode(value, this.root);
+
+        function findNode(value, root) {
+
+            if (root == null) {
+                root = new Node(value);
+                return root;
+            }
+            
+            if (value < root.data) {
+                console.log("LESS");
+                root.left = findNode(value, root.left);
+            }
+            else if (value > root.data) {
+                console.log("GREATER");
+                root.right = findNode(value, root.right);
+            }
+            return root;
+        }
+    }
+
+    deleteItem(value) {
 
     }
+
+
+
+
+
 }
 
-// FUNCTION TO SORT ARRAY 
+
 
 
 
@@ -75,25 +102,11 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 
-let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-//           5
-//       3        8
-//    1     4   6   9
-//                    10
-
-let node = new Node(14);
-console.log(node);
-
-
-// 1, 3, 4, 6, 7, 8, 10, 13, 14
-
-//                 7
-//            3         10
-//          1  4       8  13
-//              6           14
+let arr = [1, 2, 3, 4, 5, 6, 7, 9];
 
 let tree = new Tree(arr);
-console.log(tree.root);
+prettyPrint(tree.root);
 
-console.log(prettyPrint(tree.root))
+tree.insert(8);
+
+prettyPrint(tree.root);
