@@ -29,7 +29,7 @@ class Node {
 class Tree {
     constructor(array) {
         this.array = array;
-        this.root = this.buildTree(array, 0, array.length);  // ?!?!?!?!?!?!?!?!?
+        this.root = this.buildTree(array, 0, array.length-1);  // ?!?!?!?!?!?!?!?!?
     }
 
     // ACCEPTS ARRAY WHEN INITIALIZED
@@ -56,6 +56,11 @@ class Tree {
 
 // FUNCTION TO SORT ARRAY 
 
+
+
+
+
+// VISUALIZER OF TREE
 const prettyPrint = (node, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
