@@ -50,28 +50,83 @@ class Tree {
 
     insert(value) {
 
-        findNode(value, this.root);
+        let root = this.root;
+        findLeaf(value, root);
 
-        function findNode(value, root) {
-
-            if (root == null) {
-                root = new Node(value);
-                return root;
+        function findLeaf(value, node) {
+            if (node == null) {
+                node = new Node(value);
+                return node;
             }
             
-            if (value < root.data) {
+            if (value < node.data) {
                 console.log("LESS");
-                root.left = findNode(value, root.left);
+                node.left = findLeaf(value, node.left);
             }
-            else if (value > root.data) {
+            else if (value > node.data) {
                 console.log("GREATER");
-                root.right = findNode(value, root.right);
+                node.right = findLeaf(value, node.right);
             }
-            return root;
+            return node;
         }
     }
 
     deleteItem(value) {
+
+        let root = this.root;
+        findAndDelete(value, root);
+
+        function findAndDelete (value, node) {
+            if (node == null) {
+                console.log("doesn't exist");
+                return node;
+            }
+            
+            if (value < node.data) {
+                node.left = findAndDelete(value, node.left);
+            }
+            else if (value > node.data) {
+                node.right = findAndDelete(value, node.right);
+            }
+            else if (value == node.data) {
+                // DELETE LEAF
+                if (!node.left && !node.right) {
+                    return null;
+                }
+                // DELETE NODE W ONE CHILD
+                else if (node.left == null) {
+                    return node.right;
+                }
+                else if (node.right == null) {
+                    return node.left;
+                }
+                // DELETE NODE WITH TWO CHILDREN
+                else if (node.right && node.left) {
+                    let current = node.right;
+                    let parent = null;
+                    while (current.left) {
+                        parent = current;
+                        current = current.left;
+                        if (current.left == null) {
+                            parent.left = current.right;
+                            node.data = current.data;
+                        }
+
+                    }
+                    return node;
+                }
+            }
+            return node;
+        }
+
+        // ONE CHILD --- POINT PARENT TO CHILD OF REMOVED;
+
+        // TWO CHILDS --- REPLACE WITH NEXT BIGGEST CHILD/GRANDCHILD
+        //       (( RIGHT NODE CHILD W NO LEFT NODE ))
+
+
+        // RIGHT NODE - LEFT MOST BRANCH WITH NO LEFT NODE (RECURSIVE)
+        // NODE = LEFT MOST NO LEFT
 
     }
 
@@ -102,11 +157,12 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 
-let arr = [1, 2, 3, 4, 5, 6, 7, 9];
+let arr = [20,30,32,34,40,45,50,55,60,65,70,75,80,85];
 
 let tree = new Tree(arr);
+
 prettyPrint(tree.root);
 
-tree.insert(8);
+tree.deleteItem(20)
 
 prettyPrint(tree.root);
