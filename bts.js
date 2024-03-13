@@ -60,11 +60,9 @@ class Tree {
             }
             
             if (value < node.data) {
-                console.log("LESS");
                 node.left = findLeaf(value, node.left);
             }
             else if (value > node.data) {
-                console.log("GREATER");
                 node.right = findLeaf(value, node.right);
             }
             return node;
@@ -78,8 +76,8 @@ class Tree {
 
         function findAndDelete (value, node) {
             if (node == null) {
-                console.log("doesn't exist");
-                return node;
+                console.log("VALUE DOESN'T EXIST");
+                return null;
             }
             
             if (value < node.data) {
@@ -119,14 +117,28 @@ class Tree {
             return node;
         }
 
-        // ONE CHILD --- POINT PARENT TO CHILD OF REMOVED;
+    }
 
-        // TWO CHILDS --- REPLACE WITH NEXT BIGGEST CHILD/GRANDCHILD
-        //       (( RIGHT NODE CHILD W NO LEFT NODE ))
+    find(value) {
 
+        let root = this.root;
 
-        // RIGHT NODE - LEFT MOST BRANCH WITH NO LEFT NODE (RECURSIVE)
-        // NODE = LEFT MOST NO LEFT
+        function findNode(value, node) {
+            if (node == null) {
+                console.log("VALUE DOESN'T EXIST");
+                return null;
+            }
+            if (value == node.data) {
+                return node;
+            }
+            if (value > node.data) {
+                return findNode(value, node.right);
+            }
+            if (value < node.data) {
+                return findNode(value, node.left);
+            }
+        }
+        return findNode(value, root);
 
     }
 
@@ -163,6 +175,5 @@ let tree = new Tree(arr);
 
 prettyPrint(tree.root);
 
-tree.deleteItem(20)
 
-prettyPrint(tree.root);
+
