@@ -139,10 +139,40 @@ class Tree {
             }
         }
         return findNode(value, root);
-
     }
 
+    levelOrder() {
 
+        let levelOrderArr = [];
+
+        // INITIALIZE QUEUE
+        let queue = [];
+        let root = this.root;
+
+        queue.push(root);
+
+        function breadthFirst(node) {
+            
+            // ADD NODE DATA TO ARRAY
+            levelOrderArr.push(node.data);
+            // REMOVE NODE FROM QUEUE
+            queue.shift();
+
+            // IF !NULL, ADD CHILDREN TO QUEUE
+            if (node.left) {
+            queue.push(node.left);
+            }
+            if (node.right) {
+            queue.push(node.right);
+            }
+            // IF QUEUE, REPEAT WITH FIRST IN QUEUE
+            if (queue.length != 0) {
+            breadthFirst(queue[0]);
+            }
+        }
+        breadthFirst(root);
+        return levelOrderArr;
+    }
 
 
 
@@ -175,5 +205,5 @@ let tree = new Tree(arr);
 
 prettyPrint(tree.root);
 
-
+console.log(tree.levelOrder());
 
