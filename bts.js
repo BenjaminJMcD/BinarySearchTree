@@ -174,7 +174,57 @@ class Tree {
         return levelOrderArr;
     }
 
+    preOrder() {
+        // ROOT, LEFT, RIGHT
 
+        let preOrderArr = [];
+        let root = this.root;
+
+        function preOrderRecurse(node) {
+            if (node == null) {
+                return;
+            }
+            preOrderArr.push(node.data);
+            preOrderRecurse(node.left);
+            preOrderRecurse(node.right);
+        }
+        preOrderRecurse(root);
+        return preOrderArr;
+    }
+
+    inOrder() {
+        // LEFT, ROOT, RIGHT
+
+        let inOrderArr = [];
+        let root = this.root;
+
+        function inOrderRecurse(node) {
+            if (node == null) {
+                return;
+            }
+            inOrderRecurse(node.left);
+            inOrderArr.push(node.data);
+            inOrderRecurse(node.right);
+        }
+        inOrderRecurse(root);
+        return inOrderArr;
+    }
+
+    postOrder() {
+        // LEFT, RIGHT, ROOT
+
+        let postOrderArr = [];
+        let root = this.root;
+
+        function postOrderRecurse(node) {
+            if (node == null) {return};
+            postOrderRecurse(node.left);
+            postOrderRecurse(node.right);
+            postOrderArr.push(node.data);
+        }
+        postOrderRecurse(root);
+        return postOrderArr;
+    }
 
 }
 
@@ -205,5 +255,5 @@ let tree = new Tree(arr);
 
 prettyPrint(tree.root);
 
-console.log(tree.levelOrder());
+console.log(tree.postOrder());
 
