@@ -181,9 +181,7 @@ class Tree {
         let root = this.root;
 
         function preOrderRecurse(node) {
-            if (node == null) {
-                return;
-            }
+            if (node == null) {return;}
             preOrderArr.push(node.data);
             preOrderRecurse(node.left);
             preOrderRecurse(node.right);
@@ -199,9 +197,7 @@ class Tree {
         let root = this.root;
 
         function inOrderRecurse(node) {
-            if (node == null) {
-                return;
-            }
+            if (node == null) {return;}
             inOrderRecurse(node.left);
             inOrderArr.push(node.data);
             inOrderRecurse(node.right);
@@ -217,7 +213,7 @@ class Tree {
         let root = this.root;
 
         function postOrderRecurse(node) {
-            if (node == null) {return};
+            if (node == null) {return;}
             postOrderRecurse(node.left);
             postOrderRecurse(node.right);
             postOrderArr.push(node.data);
@@ -225,6 +221,35 @@ class Tree {
         postOrderRecurse(root);
         return postOrderArr;
     }
+
+    height(value) {
+
+        // RETURNS NODES HEIGHT
+        // HEIGHT == LONGEST PATH FROM NODE TO LEAF
+
+        let node = this.find(value);
+        if (node == null) {return null;}
+
+        function maxDepth(node) {
+            if (node == null) {
+                return 0
+            }
+            else {
+                let lDepth = maxDepth(node.left);
+                let rDepth = maxDepth(node.right);
+
+                if (lDepth > rDepth) {
+                    return (lDepth+1);
+                }
+                else {
+                    return (rDepth+1);
+                }
+            }
+        }
+
+        return maxDepth(node)
+    }
+
 
 }
 
@@ -256,4 +281,6 @@ let tree = new Tree(arr);
 prettyPrint(tree.root);
 
 console.log(tree.postOrder());
+
+console.log(tree.height(50))
 
