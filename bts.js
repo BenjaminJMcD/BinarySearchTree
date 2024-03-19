@@ -250,6 +250,57 @@ class Tree {
         return maxDepth(node)
     }
 
+    depth(value) {
+
+        // DEPTH == NUMBER OF EDGES FROM ROOT TO VALUE. ROOT = 0
+
+        let root = this.root;
+        let depth = 0;
+
+        function findNode(value, node) {
+            if (node == null) {
+                console.log("VALUE DOESN'T EXIST");
+                return null;
+            }
+            if (value == node.data) {
+                return depth;
+            }
+            if (value > node.data) {
+                depth++;
+                return findNode(value, node.right);
+            }
+            if (value < node.data) {
+                depth++;
+                return findNode(value, node.left);
+            }
+        }
+        return findNode(value, root);
+    }
+
+    isBalanced() {
+
+        // HEIGHT OF LEFT SUBTREE AND RIGHT SUBTREE IS NOT GREATER THAN 1
+
+        let balanced = true;
+
+        let leftTree = this.root.left.data;
+        let rightTree = this.root.right.data;
+
+        let leftHeight = this.height(leftTree);
+        let rightHeight = this.height(rightTree);
+
+        if (leftHeight - rightHeight > 1) {
+            console.log("Left is UNBALANCE");
+            return balanced = false;
+        }
+        if (rightHeight - leftHeight > 1) {
+            console.log("Right is UNBALANCE");
+            return balanced = false;
+        }
+
+        return balanced
+    }
+
 
 }
 
@@ -278,9 +329,12 @@ let arr = [20,30,32,34,40,45,50,55,60,65,70,75,80,85];
 
 let tree = new Tree(arr);
 
+tree.insert(90);
+tree.insert(91);
+
 prettyPrint(tree.root);
 
 console.log(tree.postOrder());
 
-console.log(tree.height(50))
+console.log(tree.isBalanced())
 
