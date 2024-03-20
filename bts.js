@@ -40,7 +40,7 @@ class Tree {
         
         let mid = Math.floor((start + end)/2);
 
-        let node = new Node(arr[mid]);
+        let node = new Node(array[mid]);
 
         node.left = this.buildTree(array, start, mid-1);
         node.right = this.buildTree(array, mid+1, end);
@@ -301,6 +301,18 @@ class Tree {
         return balanced
     }
 
+    rebalance() {
+
+        let orderedArray = this.inOrder();
+
+        let newTree = new Tree(orderedArray);
+
+        this.array = newTree.array
+        this.root = newTree.root
+
+        return this;
+
+    }
 
 }
 
@@ -325,16 +337,23 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 
-let arr = [20,30,32,34,40,45,50,55,60,65,70,75,80,85];
+let arr = [20,30,32,34,40,45,50,55,60,65,68,75,80];
 
 let tree = new Tree(arr);
 
-tree.insert(90);
-tree.insert(91);
+
+tree.insert(61);
+tree.insert(62);
 
 prettyPrint(tree.root);
 
-console.log(tree.postOrder());
+tree.rebalance();
 
-console.log(tree.isBalanced())
+prettyPrint(tree.root)
+
+
+
+
+
+
 
